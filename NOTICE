@@ -1,0 +1,15 @@
+tree-sitter-bitbake, the `nacelle` branch
+
+This is a fork of https://github.com/tree-sitter-grammars/tree-sitter-bitbake.
+It is under the MIT License; the full text is in LICENSE.
+
+Copyright (c) 2023 Amaan Qureshi <amaanq12@gmail.com>
+
+This branch carries two open upstream pull requests:
+
+- #24 "Update bindings & workflows", by ObserverOfTime.
+- #23 "Add support for inherit_defer directive, fix text after variable
+  expansion in string, add tests", by idillon, with the inherit_defer
+  change by Ziwei Wang (from #21).
+
+The other upstream contributors are in the git history.
