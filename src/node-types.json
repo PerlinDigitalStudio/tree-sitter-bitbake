@@ -1802,6 +1802,29 @@
     }
   },
   {
+    "type": "inherit_defer_directive",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "inherit_path",
+          "named": true
+        },
+        {
+          "type": "inline_python",
+          "named": true
+        },
+        {
+          "type": "variable_expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "inherit_directive",
     "named": true,
     "fields": {},
@@ -2502,6 +2525,10 @@
         },
         {
           "type": "inherit_configuration_directive",
+          "named": true
+        },
+        {
+          "type": "inherit_defer_directive",
           "named": true
         },
         {
@@ -3627,6 +3654,10 @@
   },
   {
     "type": "inherit",
+    "named": false
+  },
+  {
+    "type": "inherit_defer",
     "named": false
   },
   {

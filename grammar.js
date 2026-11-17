@@ -82,6 +82,7 @@ module.exports = grammar({
         $.unset_statement,
         $.inherit_directive,
         $.inherit_configuration_directive,
+        $.inherit_defer_directive,
         $.include_directive,
         $.require_directive,
         $.export_statement,
@@ -155,6 +156,16 @@ module.exports = grammar({
         $.inherit_path,
       )),
     ),
+
+    inherit_defer_directive: $ => seq(
+      'inherit_defer',
+      repeat1(choice(
+        $.variable_expansion,
+        $.inline_python,
+        $.inherit_path,
+      )),
+    ),
+
     inherit_path: _ => /[^$ \r\n][^ \r\n]+/,
 
     inherit_configuration_directive: $ => seq(

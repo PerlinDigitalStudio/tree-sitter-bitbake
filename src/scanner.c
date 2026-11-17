@@ -438,6 +438,7 @@ bool tree_sitter_bitbake_external_scanner_scan(void *payload, TSLexer *lexer, co
         bool advance_once = false;
 
         uint8_t brace_depth = 0;
+        uint8_t variable_expansion_depth = 0;
         char start_quote = 0;
 
         while (!lexer->eof(lexer) && lexer->lookahead != '\n') {
@@ -459,6 +460,7 @@ bool tree_sitter_bitbake_external_scanner_scan(void *payload, TSLexer *lexer, co
                     if (lexer->lookahead == '{') {
                         advance(lexer);
                         brace_depth++;
+                        variable_expansion_depth++;
                         if (lexer->lookahead == '@') {
                             advance(lexer);
                             lexer->result_symbol = SHELL_CONTENT;
@@ -475,9 +477,13 @@ bool tree_sitter_bitbake_external_scanner_scan(void *payload, TSLexer *lexer, co
                     break;
                 case '}':
                     advance(lexer);
-                    if (!start_quote) {
+                    if (variable_expansion_depth) {
+                        brace_depth--;
+                        variable_expansion_depth--;
+                    } else if (!start_quote) {
                         brace_depth--;
                     }
+                    
                     break;
                 case '\r':
                 case '\t':
@@ -494,7 +500,7 @@ bool tree_sitter_bitbake_external_scanner_scan(void *payload, TSLexer *lexer, co
         }
         lexer->mark_end(lexer);
         lexer->result_symbol = SHELL_CONTENT;
-        return advance_once && brace_depth == 0;
+        return advance_once && brace_depth == 0 && variable_expansion_depth == 0;
     }
 
     return false;
